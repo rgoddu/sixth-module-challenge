@@ -51,9 +51,9 @@ function getCoordinates() {
                         
 
                         for(var i = 0; i<data.list.length;i++){
-                            var item = data.list[i].dt_txt
-                            // console.log(item)
-                            var forecastTime = dayjs(item).format("H")
+                            var tempTimeDate = data.list[i].dt_txt
+                            // console.log(tempTimeDate)
+                            var forecastTime = dayjs(tempTimeDate).format("H")
                             // console.log(forecastTime)
                             if(forecastTime==temperatureTimeTaken){
                                 console.log(data.list[i].main.temp)
