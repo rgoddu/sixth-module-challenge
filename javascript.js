@@ -1,24 +1,24 @@
 var weatherAPIKey = "979d905b525cc1f3fdd4bdc9fb42db6a"
-var cityName = "charlotte"
-var coordinateURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=" + weatherAPIKey
 var temperatureTimeTaken = 12
 
-function getCoordinates() {
+var searchButton = $("#search-button")
+searchButton.click(function(){
+    var cityInput = $("input")
+    var cityName = cityInput.val()
+    getCoordinates(cityName)
+    })
+        function getCoordinates(cityName) {
+        var coordinateURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=" + weatherAPIKey
+        
     fetch(coordinateURL)
         .then(function (response) {
             return response.json()
         })
         .then(function (data) {
-            console.log(data)
-            latitude = data[0].lat
-            longitude = data[0].lon
+            console.log( data)
+            var latitude = data[0].lat
+            var longitude = data[0].lon
             var coords = "lat=" + latitude + "&lon=" + longitude
-            // localStorage.setItem("coords", coords)
-            console.log(coords)
-
-
-
-            // var cityCoordinates = localStorage.getItem("coords")
 
             var currentWeatherURL = "http://api.openweathermap.org/data/2.5/weather?" + coords + "&units=imperial&appid=" + weatherAPIKey
             var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?" + coords + "&cnt&units=imperial&appid=" + weatherAPIKey
@@ -51,6 +51,8 @@ function getCoordinates() {
                         
 
                         for(var i = 0; i<data.list.length;i++){
+
+                            //checks to see if weather reporting is at the inputted time
                             var tempTimeDate = data.list[i].dt_txt
                             // console.log(tempTimeDate)
                             var forecastTime = dayjs(tempTimeDate).format("H")
@@ -66,4 +68,4 @@ function getCoordinates() {
             getForecast()
         })
 }
-getCoordinates()
+// getCoordinates()
