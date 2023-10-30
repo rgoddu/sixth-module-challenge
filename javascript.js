@@ -1,6 +1,5 @@
 var weatherAPIKey = "979d905b525cc1f3fdd4bdc9fb42db6a"
 var temperatureTimeTaken = 12
-
 var searchButton = $("#search-button")
 searchButton.click(function(){
     var cityInput = $("input")
@@ -33,9 +32,15 @@ searchButton.click(function(){
                         var temperature = data.main.temp
                         console.log("current weather \n ---------------")
                         console.log("wind speed " + data.wind.speed)
-                        console.log("temp " + temperature)
+                        console.log("temperature: " + temperature)
                         console.log(data.weather[0].description)
                         console.log("humidity " + data.main.humidity + "\n =======")
+                        var currentTemp = $("#current-temp")
+                        currentTemp.text("Temperature: " + temperature)
+                        var currentHumidity = $("#current-humidity")
+                        currentHumidity.text("Humidity: " + data.main.humidity)
+                        var currentWind = $("#current-wind")
+                        currentWind.text("Wind speed: " + data.wind.speed)
                     })
             }
             getWeather()
@@ -58,6 +63,12 @@ searchButton.click(function(){
                             var forecastTime = dayjs(tempTimeDate).format("H")
                             // console.log(forecastTime)
                             if(forecastTime==temperatureTimeTaken){
+                                var weekday = dayjs(tempTimeDate).format("dddd")
+                                var dayInfo = Math.floor(i/8)
+                                // console.log("number:" + dayInfo)
+                                var weekdayContainer = $("#forecast-"+dayInfo)
+                                weekdayContainer.text(weekday)
+                                console.log(weekday)
                                 console.log(data.list[i].main.temp)
                             }
     
